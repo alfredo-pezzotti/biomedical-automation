@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import os
 import collections
 import xlwt
@@ -40,7 +42,7 @@ def searchFiles(path):
         # per ogni numero specificato...
         for j in range (len(lista_numeri)):
             # se il numero coincide con il file sotto il cursore "files"...
-            if ( ( str(lista_numeri[j])[2:len(lista_numeri[j])-3]+ ".pdbqt") == 
+            if ( ( lista_numeri[j][0] + ".pdbqt") == 
                     files.name[len(files.name)-8:]):
                 # aggiungilo alla lista di file da scrivere
                 lista_files[i].append(files.name)
