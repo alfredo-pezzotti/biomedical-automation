@@ -5,31 +5,34 @@ import collections
 import xlwt
 
 
-# lista dei numeri da cercare
-lista_numeri = collections.defaultdict(list)
-# lista dei valori trovati nei file
-lista_valori = collections.defaultdict(list)
+# list of the file numbers to be searched
+number_list = collections.defaultdict(list)
+# list of the values found in the matching files
+value_list = collections.defaultdict(list)
 
 
 def parseFiles(fileName, index):
-    # apro il file in lettura
+    # open the input file (read-only):
     fo = open(fileName, "r")
-    # assegno un array di linee:
+    # assign an array containing the file lines:
     line = fo.readlines()
-    # cerco la linea giusta:
+    # search the correct line:
     i=0
     pippo = 1
     while ( (pippo) and (i < len(line)) ):
+        # splits the line in tokens (separated by spaces):
         tokenized_line = line[i].split()
+        # if the line matches:
         if (tokenized_line[0] == "REMARK") and \
            (tokenized_line[1] == "VINA")   and \
            (tokenized_line[2] == "RESULT:"):
             pippo=0
             break
+        # else, go on:
         i = i + 1
-    
-    result = tokenized_line[3]
-    lista_valori[index].append(result)
+    if pippo == 0:
+        result = tokenized_line[3]
+        value_list[index].append(result)
 
     fo.close()
 
@@ -40,12 +43,12 @@ def searchFiles(path):
     # itera su tutti i file nella cartella corrente:
     for files in os.scandir(path):
         # per ogni numero specificato...
-        for j in range (len(lista_numeri)):
+        for j in range (len(number_list)):
             # se il numero coincide con il file sotto il cursore "files"...
-            if ( ( lista_numeri[j][0] + ".pdbqt") == 
+            if ( ( number_list[j][0] + ".pdbqt") == 
                     files.name[len(files.name)-8:]):
                 # aggiungilo alla lista di file da scrivere
-                lista_files[i].append(files.name)
+                file_list[i].append(files.name)
     return
 
 
@@ -70,11 +73,11 @@ while pippo:
     if (len(temp) == 0):
         pippo = 0
         break
-    lista_numeri[pippo-1].append(temp)
+    number_list[pippo-1].append(temp)
     pippo = pippo + 1
 
 # crea una lista vuota:
-lista_files = collections.defaultdict(list)
+file_list = collections.defaultdict(list)
 # indice:
 i = 0
 
@@ -82,16 +85,16 @@ i = 0
 searchFiles(path)
 
 # per ogni file che matcha l'input dell'utonto...
-for filename in range (len(lista_files)):
-    parseFiles(lista_files[filename][0], filename)
+for filename in range (len(file_list)):
+    parseFiles(file_list[filename][0], filename)
 
 # adesso butta tutto in un file excel:
 wb = xlwt.Workbook()
-foglio01 = wb.add_sheet('Foglio 1')
+sheet01 = wb.add_sheet('Sheet 1')
 i = 1
-for element in range(len(lista_valori)):
-    foglio01.write(i, 0, lista_files[i-1][0])
-    foglio01.write(i, 1, lista_valori[i-1][0])
+for element in range(len(value_list)):
+    sheet01.write(i, 0, file_list[i-1][0])
+    sheet01.write(i, 1, value_list[i-1][0])
     i = i + 1
 
 wb.save("Risultati.xls")
