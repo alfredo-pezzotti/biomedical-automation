@@ -40,14 +40,15 @@ def parseFiles(fileName, index):
 
 
 def searchFiles(path):
-    # itera su tutti i file nella cartella corrente:
+    # iterate over each file in current directory:
     for files in os.scandir(path):
-        # per ogni numero specificato...
+        # for each file...
         for j in range (len(number_list)):
-            # se il numero coincide con il file sotto il cursore "files"...
+            # if current file matches the "files" identifier...
             if ( ( number_list[j][0] + ".pdbqt") == 
                     files.name[len(files.name)-8:]):
-                # aggiungilo alla lista di file da scrivere
+                # add the file to the list of files whose 
+                # values areto be exported
                 file_list[i].append(files.name)
     return
 
@@ -57,18 +58,17 @@ def searchFiles(path):
     MAIN
 """
 
-print("\nImmetti i numeri dei file da scrivere \n(esempio: scrivi \
-01 per il file file01.pdbqt). \n\
-Inserisci una linea vuota quando hai finito. \nQuesto software \
-non funge se provi a iterare su piu' di 100 file \n(e in quel \
-caso secondo me stai fuori)\n")
+print("\nInsert the numbers identifying the files \nto be written (e.g.: write \
+01 for file file01.pdbqt). \n\
+Insert an empty line to start the computation. \n\
+Don't use this software over more than 100 files. \n\n")
 
 # piglia la directory di lavoro corrente:
 path = os.getcwd()
 
 pippo = 1
 while pippo:
-    print("immettere il file " + str(pippo) + " da scrivere: ")
+    print("Insert the file " + str(pippo) + " to be parsed: ")
     temp = input()
     if (len(temp) == 0):
         pippo = 0
@@ -76,19 +76,19 @@ while pippo:
     number_list[pippo-1].append(temp)
     pippo = pippo + 1
 
-# crea una lista vuota:
+# create an empty list:
 file_list = collections.defaultdict(list)
-# indice:
+# index:
 i = 0
 
-# costruisce una lista di file compatibili:
+# builds a list of matching files:
 searchFiles(path)
 
-# per ogni file che matcha l'input dell'utonto...
+# for each file matching the user's input...
 for filename in range (len(file_list)):
     parseFiles(file_list[filename][0], filename)
 
-# adesso butta tutto in un file excel:
+# now write the results to a spreadsheet:
 wb = xlwt.Workbook()
 sheet01 = wb.add_sheet('Sheet 1')
 i = 1
@@ -97,6 +97,6 @@ for element in range(len(value_list)):
     sheet01.write(i, 1, value_list[i-1][0])
     i = i + 1
 
-wb.save("Risultati.xls")
+wb.save("Results.xls")
 
 # EOF
