@@ -58,8 +58,8 @@ def searchFiles(path):
     MAIN
 """
 
-print("\nInsert the numbers identifying the files \nto be written (e.g.: write \
-01 for file file01.pdbqt). \n\
+print("\nInsert the numbers identifying the files \nto be written \
+(e.g.: write 01 for file file01.pdbqt). \n\
 Insert an empty line to start the computation. \n\
 Don't use this software over more than 100 files. \n\n")
 
