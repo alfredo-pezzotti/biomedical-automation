@@ -1,10 +1,18 @@
 import os
 import subprocess as sp
 
-print("Inserisci il nome dei file: ")
+print("Insert the files' base name: ")
 argbase = input()
-print("Inserisci il numero di file da generare: ")
-N = int(input())
+
+inputError = True
+while inputError:
+    try:
+        print("How many times you want to run the simuation? ")
+        N = int(input())
+        inputError=False
+    except ValueError:
+        print("Please insert a valid number.")
+        continue
 
 # qui metti il numero di cicli:
 #N = QUALCOSA
