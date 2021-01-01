@@ -9,9 +9,12 @@ import xlwt
 number_list = collections.defaultdict(list)
 # list of the values found in the matching files
 value_list = collections.defaultdict(list)
-
+# create an empty file list:
+file_list = collections.defaultdict(list)
 
 def parseFiles(fileName, index):
+    global value_list
+
     # open the input file (read-only):
     fo = open(fileName, "r")
     # assign an array containing the file lines:
@@ -40,6 +43,9 @@ def parseFiles(fileName, index):
 
 
 def searchFiles(path):
+    global file_list
+    global number_list
+
     # iterate over each file in current directory:
     for files in os.scandir(path):
         # for each file...
@@ -49,7 +55,7 @@ def searchFiles(path):
                     files.name[len(files.name)-8:]):
                 # add the file to the list of files whose 
                 # values areto be exported
-                file_list[i].append(files.name)
+                file_list[j].append(files.name)
     return
 
 
@@ -76,8 +82,7 @@ while pippo:
     number_list[pippo-1].append(temp)
     pippo = pippo + 1
 
-# create an empty list:
-file_list = collections.defaultdict(list)
+
 # index:
 i = 0
 
