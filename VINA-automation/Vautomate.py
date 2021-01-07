@@ -30,7 +30,7 @@ Press RETURN for defalt (1)")
 #N = QUALCOSA
 #argbase= "irinotecan"
 
-for i in range (startValue, N+1):
+for i in range (startValue, startValue + N + 1):
     if i < 10:
         strI = str(0) + str(i)
     else:
