@@ -14,11 +14,23 @@ while inputError:
         print("Please insert a valid number.")
         continue
 
+startValue = 1
+inputError = True
+while inputError:
+    try:
+        print("Which simulation number do you want to start from?\n\
+Press RETURN for defalt (1)")
+        startValue = int(input())
+        inputError = False
+    except ValueError:
+        print("Please insert a valid number.")
+        continue
+
 # qui metti il numero di cicli:
 #N = QUALCOSA
 #argbase= "irinotecan"
 
-for i in range (1, N+1):
+for i in range (startValue, N+1):
     if i < 10:
         strI = str(0) + str(i)
     else:
