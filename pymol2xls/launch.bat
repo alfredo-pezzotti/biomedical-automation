@@ -1,3 +1,5 @@
 
 SET curdir=%~dp0
-python3 %curdir%pymol2xls.py
+python pymol2xls.py
+pause
+Results.xls
